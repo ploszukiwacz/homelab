@@ -1,0 +1,19 @@
+services:
+  searxng:
+    image: searxng/searxng
+    container_name: searxng
+    volumes:
+      - './config:/etc/searxng'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.searxng.rule=Host(`search.hl.lan`)"
+      - "traefik.http.routers.searxng.entrypoints=websecure"
+      - "traefik.http.services.searxng.loadbalancer.server.port=8080"
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true
