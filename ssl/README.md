@@ -1,0 +1,1 @@
+Place your certs (`cert.crt` and `key.key`) here, all files here will be ignored by `.gitignore`.

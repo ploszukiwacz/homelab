@@ -5,3 +5,7 @@ config/
 data/
 .env*
 !.env.example
+
+# SSL
+ssl/*
+!ssl/README.md
