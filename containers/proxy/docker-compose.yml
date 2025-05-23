@@ -1,0 +1,33 @@
+services:
+  traefik:
+    image: traefik
+    container_name: traefik
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config:/etc/traefik
+      - ./config/dynamic:/etc/traefik/dynamic
+
+      - ./config.yml:/etc/traefik/traefik.yml
+      - ./tls.yml:/etc/traefik/dynamic/tls.yml
+      
+      - ./data:/data
+      - ../../ssl:/ssl
+    command:
+      - "--configfile=/etc/traefik/traefik.yml"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.hl.lan`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls=true"
+    networks:
+      - traefik_proxy
+    
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true

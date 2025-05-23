@@ -1,0 +1,7 @@
+old
+
+# Container related
+config/
+data/
+.env*
+!.env.example
