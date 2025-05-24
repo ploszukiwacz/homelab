@@ -3,6 +3,7 @@ old/
 # Container related
 config/
 data/
+cache/
 .env*
 !.env.example
 roundcube/app

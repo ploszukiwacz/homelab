@@ -1,0 +1,29 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    user: '1000:1000'
+    container_name: jellyfin
+    volumes:
+      - './config:/config'
+      - './cache:/cache'
+      - '/mnt/hdd/media/music:/music'
+      - '/mnt/hdd/media/movies:/movies'
+      - '/mnt/hdd/media/yt:/yt'
+    devices:
+      - /dev/dri
+      - /dev/dma_heap
+    restart: unless-stopped
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.hl.lan
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.hl.lan`)"
+      - "traefik.http.routers.jellyfin.entrypoints=websecure"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+    networks:
+      - traefik_proxy
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true
