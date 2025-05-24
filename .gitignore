@@ -5,6 +5,9 @@ config/
 data/
 .env*
 !.env.example
+roundcube/app
+roundcube/config
+roundcube/db
 
 # SSL
 ssl/*

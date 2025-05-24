@@ -1,0 +1,23 @@
+services:
+  roundcube:
+    image: roundcube/roundcubemail
+    container_name: roundcube
+    env_file:
+      - .env
+    volumes:
+      - "./app:/var/www/html"
+      - "./config:/var/roundcube/config"
+      - "./db:/var/roundcube/db"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.roundcube.rule=Host(`roundcube.hl.lan`)"
+      - "traefik.http.routers.roundcube.entrypoints=websecure"
+      - "traefik.http.routers.roundcube.tls=true"
+      - "traefik.http.services.roundcube.loadbalancer.server.port=80"
+    networks:
+      - traefik_proxy
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true
