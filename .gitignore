@@ -1,15 +1,30 @@
+# Legacy
 old/
 
-# Container related
-config/
-data/
-cache/
-.env*
-!.env.example
-roundcube/app
-roundcube/config
-roundcube/db
+# Container data
+containers/*/config/
+containers/*/data/
+containers/*/cache/
+containers/*/work/
+containers/*/conf/
+containers/*/app/
+containers/*/db/
 
-# SSL
+# Environment files
+.env
+containers/*/.env
+!containers/*/.env.example
+
+# SSL certificates
 ssl/*
 !ssl/README.md
+
+# Backup ignore file
+scripts/hdd_ignore.txt
+
+# Scripts logs
+scripts/*.log
+
+# OS files
+.DS_Store
+Thumbs.db

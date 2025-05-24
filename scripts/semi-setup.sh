@@ -2,35 +2,37 @@
 
 set -e
 
-# Update and upgrade system
-sudo apt update && sudo apt upgrade -y
+echo "=== Homelab Setup Script ==="
 
-# Install prerequisites
-sudo apt install -y \
-    ca-certificates \
-    curl \
-    gnupg
+# Check if running as root
+if [[ $EUID -eq 0 ]]; then
+   echo "This script should not be run as root"
+   exit 1
+fi
 
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+# Create necessary directories
+echo "Creating directories..."
+mkdir -p ssl
 
-# Add the repository to Apt sources:
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
+# Copy environment files
+echo "Setting up environment files..."
+for env_file in containers/*/.env.example; do
+    if [[ -f "$env_file" ]]; then
+        target="${env_file%.example}"
+        if [[ ! -f "$target" ]]; then
+            cp "$env_file" "$target"
+            echo "Created: $target"
+        fi
+    fi
+done
 
-# Install Docker Engine, CLI, and containerd
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# Create Docker network
+echo "Creating Docker network..."
+docker network create traefik_proxy 2>/dev/null || echo "Network already exists"
 
-# Add current user to docker group
-sudo usermod -aG docker "$USER"
-
-sudo docker network create traefik_proxy
-
-# Apply new group membership without logout
-exec sg docker newgrp `id -gn` <<EOF
-echo "Docker setup complete! You can now use Docker without logging out."
-EOF
+echo "Setup complete!"
+echo "Next steps:"
+echo "1. Add SSL certificates to ssl/ directory"
+echo "2. Configure .env files in containers/"
+echo "3. Update domain names from .hl.lan to your domain"
+echo "4. Start services with: cd containers/proxy && docker compose up -d"

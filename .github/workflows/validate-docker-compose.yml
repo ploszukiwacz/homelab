@@ -1,0 +1,20 @@
+name: Validate Docker Compose
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Validate Docker Compose files
+      run: |
+        for compose_file in containers/*/docker-compose.yml; do
+          echo "Validating $compose_file"
+          docker compose -f "$compose_file" config
+        done
