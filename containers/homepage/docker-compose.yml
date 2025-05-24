@@ -7,8 +7,6 @@ services:
       - ./data/images:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
-    env_file:
-      - .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homepage.rule=Host(`hl.lan`)"
