@@ -1,0 +1,34 @@
+services:
+  beszel:
+    image: henrygd/beszel
+    container_name: beszel
+    restart: unless-stopped
+    volumes:
+      - ./data:/beszel_data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.beszel.rule=Host(`beszel.hl.lan`)"
+      - "traefik.http.routers.beszel.entrypoints=websecure"
+      - "traefik.http.routers.beszel.tls=true"
+    networks:
+      - traefik_proxy
+
+
+  beszel-agent:
+    image: henrygd/beszel-agent
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # monitor other disks / partitions by mounting a folder in /extra-filesystems
+      # - /mnt/disk1/.beszel:/extra-filesystems/disk1:ro
+      - /mnt/hdd/.beszel:/extra-filesystems/hdd:ro
+      - /zram:/extra-filesystems/zram:ro
+    env_file:
+      - .env
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true
