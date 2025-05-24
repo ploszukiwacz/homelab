@@ -1,0 +1,40 @@
+services:
+  miniflux:
+    image: miniflux/miniflux:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.miniflux.rule=Host(`miniflux.hl.lan`)"
+      - "traefik.http.routers.miniflux.entrypoints=websecure"
+      - "traefik.http.routers.miniflux.tls=true"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://miniflux:secret@db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+    networks:
+      - traefik_proxy
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      - POSTGRES_USER=miniflux
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=miniflux
+    volumes:
+      - miniflux-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 10s
+      start_period: 30s
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true
+
+volumes:
+  miniflux-db:
