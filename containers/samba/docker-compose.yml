@@ -1,0 +1,11 @@
+services:
+  samba:
+    image: dockurr/samba
+    container_name: samba
+    ports:
+      - '445:445'
+    env_file:
+      - .env
+    volumes:
+      - '/mnt/hdd/samba:/storage'
+    restart: always
