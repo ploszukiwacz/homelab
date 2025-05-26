@@ -1,0 +1,20 @@
+services:
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:v2
+    restart: unless-stopped
+    environment:
+      - SB_USER=admin:admin
+    volumes:
+      - ./data:/space
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.silverbullet.rule=Host(`silverbullet.hl.lan`)"
+      - "traefik.http.routers.silverbullet.entrypoints=web"
+      - "traefik.http.services.silverbullet.loadbalancer.server.port=3000"
+    networks:
+      - traefik_proxy
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true

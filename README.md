@@ -56,6 +56,7 @@ Some values are hardcoded for my specific setup. **Please review and update the 
 | Roundcube | `https://roundcube.hl.lan` | Webmail |
 | SearXNG | `https://search.hl.lan` | Privacy search engine |
 | Miniflux| `https://miniflux.hl.lan` | FOSS RSS Reader |
+| Silverbullet | `silverbullet.hl.lan` | FOSS Notes App |
 
 ## 🛠️ Scripts
 
