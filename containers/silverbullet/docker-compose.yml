@@ -2,8 +2,8 @@ services:
   silverbullet:
     image: ghcr.io/silverbulletmd/silverbullet:v2
     restart: unless-stopped
-    environment:
-      - SB_USER=admin:admin
+    env_file:
+      - .env
     volumes:
       - ./data:/space
     labels:
@@ -16,5 +16,4 @@ services:
 
 networks:
   traefik_proxy:
-    name: traefik_proxy
     external: true

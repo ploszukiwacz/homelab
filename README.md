@@ -55,7 +55,7 @@ Some values are hardcoded for my specific setup. **Please review and update the 
 | Beszel | `https://beszel.hl.lan` | System monitoring |
 | Roundcube | `https://roundcube.hl.lan` | Webmail |
 | SearXNG | `https://search.hl.lan` | Privacy search engine |
-| Miniflux| `https://miniflux.hl.lan` | FOSS RSS Reader |
+| Miniflux | `https://miniflux.hl.lan` | FOSS RSS Reader |
 | Silverbullet | `https://silverbullet.hl.lan` | FOSS Notes App |
 
 ## 🛠️ Scripts
