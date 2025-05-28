@@ -1,0 +1,20 @@
+services:
+  static-server:
+    image: nginx:alpine
+    container_name: sft-nginx
+    volumes:
+      - ./data:/usr/share/nginx/html:ro
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sfs.rule=Host(`sft.hl.lan`)"
+      - "traefik.http.routers.sfs.entrypoints=websecure"
+      - "traefik.http.routers.sfs.tls=true"
+      - "traefik.http.services.sfs.loadbalancer.server.port=80"
+    restart: unless-stopped
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true
