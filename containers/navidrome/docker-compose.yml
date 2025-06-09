@@ -1,0 +1,24 @@
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    # user: 1000:1000 # should be owner of volumes
+    restart: unless-stopped
+    environment:
+      ND_CONFIGFILE: "/data/config.toml"
+    volumes:
+      - "./data:/data"
+      - "./music:/music:ro"
+      - "./config.toml:/data/config.toml"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.navidrome.rule=Host(`navidrome.hl.lan`)"
+      - "traefik.http.routers.navidrome.entrypoints=websecure"
+      - "traefik.http.routers.navidrome.tls=true"
+      - "traefik.http.services.navidrome.loadbalancer.server.port=4533"
+    networks:
+      - traefik_proxy
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true

@@ -1,0 +1,26 @@
+LogLevel = 'DEBUG'
+EnableDownloads = false
+DefaultLanguage = 'en'
+
+EnableInsightsCollector = false
+GATrackingID = ""
+
+Scanner.Enabled = true
+Scanner.Schedule = "0 */12 * * *"
+Scanner.WatcherWait = "5s"
+Scanner.ScanOnStartup = true
+Scanner.ArtistJoiner = " ; "
+Scanner.PurgeMissing = "full"
+
+SessionTimeout = "48h"
+BaseUrl = "https://navidrome.hl.lan"
+
+UILoginBackgroundUrl = "https://raw.githubusercontent.com/zhichaoh/catppuccin-wallpapers/refs/heads/main/mandelbrot/mandelbrot_full_pink.png"
+UIWelcomeMessage = "Hewooo :3"
+
+LastFM.Enabled = true
+LastFM.ApiKey = ""
+LastFM.Secret = ""
+LastFM.Language = "en"
+Spotify.ID = ""
+Spotify.Secret = ""

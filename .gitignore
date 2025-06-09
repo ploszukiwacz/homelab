@@ -9,6 +9,8 @@ containers/*/work/
 containers/*/conf/
 containers/*/app/
 containers/*/db/
+containers/navidrome/config.toml
+containers/navidrome/music
 
 # Environment files
 .env

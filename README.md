@@ -37,7 +37,7 @@ Some values are hardcoded for my specific setup. **Please review and update the 
    ```bash
    # Start proxy first
    cd containers/proxy && docker compose up -d
-   
+
    # Then start other services
    cd ../jellyfin && docker compose up -d
    # ... repeat for other services
@@ -58,6 +58,7 @@ Some values are hardcoded for my specific setup. **Please review and update the 
 | Miniflux | `https://miniflux.hl.lan` | FOSS RSS Reader |
 | Silverbullet | `https://silverbullet.hl.lan` | FOSS Notes App |
 | Simple File Thing (SFT) | `https://sft.hl.lan` | Nginx |
+| Navidrome | `https://navidrome.hl.lan` | Music Player |
 
 ## 🛠️ Scripts
 
